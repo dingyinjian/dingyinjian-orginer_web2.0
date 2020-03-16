@@ -1,188 +1,130 @@
-let menus = [
-  // { id: 0, level:1 , name: '首页', type: "link", url: "/home", icon: 'far fa-circle nav-icon', isShow: true },
-  {
+let menus = [{
     id: 1,
     level: 1,
-    name: '系统',
+    name: '超管',
     type: "button",
     isSelected: false,
-    isExpanded: false,
+    isExpanded: true,
     icon: 'nav-icon fas fa-tachometer-alt',
-    isShow: true,
+    isShow: false,
     subMenu: [
-      
-      { id: 9, level: 2, name: '首页', type: "link", url: "/home", icon: 'far fa-circle nav-icon', isShow: true },
-      { id: 10, level: 2, name: '我的账号', type: "link", url: "/userCenter", icon: 'far fa-circle nav-icon', isShow: true },
-      {
-        id: 12,
-        level: 2,
-        name: '账号管理',
-        type: "button",
-        isSelected: false,
-        isExpanded: false,
-        icon: 'fa fa fa-user nav-icon',
-        isShow: false,
-        subMenu: [
-          { id: 121, level: 3, name: '账号列表', type: "link", url: "/overview", icon: 'far fa-circle nav-icon', isShow: true },
-          { id: 122, level: 3, name: '商户列表', type: "link", url: "/merchantList", icon: 'far fa-circle nav-icon', isShow: true },
-          { id: 123, level: 3, name: '收银台总列表', type: "link", url: "/adminCashList", icon: 'far fa-circle nav-icon', isShow: true },
-          { id: 125, level: 3, name: '在线用户', type: "link", url: "/userOnline", icon: 'far fa-circle nav-icon', isShow: true },
-        ]
-      },
-      { id: 13, level: 1, name: '资金提现列表', type: "link", url: "/witList", icon: 'far fa-circle nav-icon', isShow: false },
-      { id: 14, level: 1, name: '平台统计', type: "link", url: "/collection", icon: 'far fa-circle nav-icon', isShow: false },
-      { id: 15, level: 1, name: '结算列表', type: "link", url: "/adminRecordList", icon: 'far fa-circle nav-icon', isShow: false },
-      {
-        id: 16,
-        level: 2,
-        name: '订单管理',
-        type: "button",
-        isSelected: false,
-        isExpanded: false,
-        icon: 'fa fa fa-check nav-icon',
-        isShow: false,
-        subMenu: [
-          { id: 161, level: 3, name: '订单列表', type: "link", url: "/adminOrderList", icon: 'far fa-circle nav-icon', isShow: true },
-          { id: 162, level: 3, name: '已完成订单', type: "link", url: "/adminFinished", icon: 'far fa-circle nav-icon', isShow: true },
-          { id: 163, level: 3, name: '未支付订单', type: "link", url: "/adminUnPaid", icon: 'far fa-circle nav-icon', isShow: true },
-          { id: 164, level: 3, name: '失败订单', type: "link", url: "/adminFaild", icon: 'far fa-circle nav-icon', isShow: true },
-          { id: 165, level: 3, name: '流水列表', type: "link", url: "/adminSerial", icon: 'far fa-circle nav-icon', isShow: true },
-
-        ]
-      },
+      { id: 10, level: 2, name: '首页', type: "link", url: "", icon: 'far fa-circle nav-icon', isShow: true },
+      { id: 11, level: 2, name: '系统信息', type: "link", url: "/userCenter", icon: 'far fa-circle nav-icon', isShow: true },
+      { id: 12, level: 2, name: '商户列表', type: "link", url: "/merchantList", icon: 'far fa-circle nav-icon', isShow: true },
+      { id: 13, level: 2, name: '系统设置', type: "link", url: "/sysSet", icon: 'far fa-circle nav-icon', isShow: true },
     ]
   },
   {
     id: 2,
     level: 1,
-    name: '代收',
+    name: '商户',
     type: "button",
     isExpanded: true,
     isSelected: false,
     icon: 'nav-icon fas fa-tachometer-alt',
     isShow: false,
     subMenu: [
-      { id: 20, level: 2, name: '管理中心', type: "link", url: "/manageCenter", icon: 'far fa-circle nav-icon', isShow: true },
-      { id: 21, level: 2, name: '资金记录', type: "link", url: "/fundRcord", icon: 'far fa-circle nav-icon', isShow: true },
-      { id: 22, level: 2, name: '结算列表', type: "link", url: "/recordList", icon: 'far fa-circle nav-icon', isShow: true },
-      { id: 23, level: 3, name: '收银台列表', type: "link", url: "/cashList", icon: 'far fa-circle nav-icon', isShow: true },
-      { id: 24, level: 2, name: '商户信息', type: "link", url: "/mchInfo", icon: 'far fa-circle nav-icon', isShow: true },
-      { id: 25, level: 2, name: '物流平台', type: "link", url: "/logistics", icon: 'far fa-circle nav-icon', isShow: true },
       {
-        id: 26,
+        id: 20,
         level: 2,
-        name: '拼多多',
+        name: '首页',
         type: "button",
-        icon: 'far fa-circle nav-icon',
+        isExpanded: true,
         isSelected: false,
-        isExpanded: false,
+        icon: 'nav-icon fas fa-tachometer-alt',
         isShow: true,
         subMenu: [
-          // { id: 260, level: 4, name: '统计面板', type: "link", url: "/statisPanel", icon: 'far fa-circle nav-icon', isShow: true },
-          // { id: 231, level: 4, name: '配置信息', type: "link", url: "/configInfo", icon: 'far fa-circle nav-icon', isShow: true },
-          { id: 262, level: 4, name: '小号管理', type: "link", url: "/buyer", icon: 'far fa-circle nav-icon', isShow: true },
-          //  { id: 243, level: 4, name: '收银台', type: "link", url: "/platForm", icon: 'far fa-circle nav-icon', isShow: true },
-          { id: 264, level: 4, name: '店铺管理', type: "link", url: "/shop", icon: 'far fa-circle nav-icon', isShow: true },
-          // { id: 265, level: 4, name: '店铺对账', type: "link", url: "/billSerial", icon: 'far fa-circle nav-icon', isShow: true },
-          // { id: 266, level: 4, name: '订单列表', type: "link", url: "/order", icon: 'far fa-circle nav-icon', isShow: true },
-          // { id: 235, level: 4, name: '发货地址', type: "link", url: "/address", icon: 'far fa-circle nav-icon', isShow: true },            
+          { id: 200, level: 3, name: '系统统计', type: "link", url: "/merSysStatist", icon: 'far fa-circle nav-icon', isShow: true },
+          { id: 201, level: 3, name: '商户信息', type: "link", url: "/userCenter", icon: 'far fa-circle nav-icon', isShow: true },
         ]
       },
-      {
-        id: 27,
-        level: 2,
-        name: '订单管理',
-        type: "button",
-        icon: 'far fa-circle nav-icon',
-        isSelected: false,
-        isExpanded: false,
-        isShow: true,
-        subMenu: [
-          { id: 270, level: 4, name: '全部订单', type: "link", url: "/allOrder", icon: 'far fa-circle nav-icon', isShow: true },
-          { id: 271, level: 4, name: '已完成订单', type: "link", url: "/finished", icon: 'far fa-circle nav-icon', isShow: true },
-          { id: 272, level: 4, name: '未支付订单', type: "link", url: "/Unpaid", icon: 'far fa-circle nav-icon', isShow: true },
-          { id: 273, level: 4, name: '失败订单', type: "link", url: "/faild", icon: 'far fa-circle nav-icon', isShow: true },
-          { id: 274, level: 4, name: '待发货订单', type: "link", url: "/UnDelivered", icon: 'far fa-circle nav-icon', isShow: true },
-          { id: 275, level: 4, name: '待收货订单', type: "link", url: "/UnReceipt", icon: 'far fa-circle nav-icon', isShow: true },
+      { id: 21, level: 2, name: '码商列表', type: "link", url: "/merVerderList", icon: 'far fa-circle nav-icon', isShow: true },
+      { id: 22, level: 2, name: '盘口列表', type: "link", url: "/merCashList", icon: 'far fa-circle nav-icon', isShow: true },
+      { id: 23, level: 2, name: '订单管理', type: "link", url: "/merOrder", icon: 'far fa-circle nav-icon', isShow: true },
+      { id: 24, level: 2, name: '流水记录', type: "link", url: "/merFlow", icon: 'far fa-circle nav-icon', isShow: true },
+      { id: 25, level: 2, name: '资金管理', type: "link", url: "/merFounds", icon: 'far fa-circle nav-icon', isShow: true },
+      { id: 26, level: 2, name: '其他设置', type: "link", url: "/merOther", icon: 'far fa-circle nav-icon', isShow: true },
 
-        ]
-      }
     ]
   },
-  { id: 3, level: 1, name: 'VPN', type: "button", isSelected: false, isExpanded: false, icon: 'nav-icon fas fa-tachometer-alt', isShow: false },
+  {
+    id: 3,
+    level: 1,
+    name: '码商',
+    type: "button",
+    isSelected: false,
+    isExpanded: true,
+    icon: 'nav-icon fas fa-tachometer-alt',
+    isShow: false,
+    subMenu: [
+      {
+        id: 30,
+        level: 2,
+        name: '首页',
+        type: "button",
+        isExpanded: true,
+        isSelected: false,
+        icon: 'nav-icon fas fa-tachometer-alt',
+        isShow: true,
+        subMenu: [
+          { id: 300, level: 3, name: '码商信息', type: "link", url: "/userCenter", icon: 'far fa-circle nav-icon', isShow: true },
+          { id: 301, level: 3, name: '管理统计', type: "link", url: "/veStatist", icon: 'far fa-circle nav-icon', isShow: true },
+        ]
+      },
+      { id: 31, level: 2, name: '小号管理', type: "link", url: "/buyerMgmt", icon: 'far fa-circle nav-icon', isShow: true },
+      { id: 32, level: 2, name: '物流管理', type: "link", url: "/logistics", icon: 'far fa-circle nav-icon', isShow: true },
+      { id: 33, level: 2, name: '店铺管理', type: "link", url: "/venMallList", icon: 'far fa-circle nav-icon', isShow: true },
+      { id: 34, level: 2, name: '订单管理', type: "link", url: "/veOrderList", icon: 'far fa-circle nav-icon', isShow: true },
+      { id: 35, level: 2, name: '流水管理', type: "link", url: "/veFlow", icon: 'far fa-circle nav-icon', isShow: true },
+      // { id: 36, level: 2, name: '资金记录', type: "link", url: "/veFounds", icon: 'far fa-circle nav-icon', isShow: true },
+      // { id: 37, level: 2, name: '对接指南', type: "link", url: "", icon: 'far fa-circle nav-icon', isShow: true },
+    ]
+  },
 
   {
     id: 4,
     level: 1,
-    name: '收银台',
+    name: '盘口',
     type: "button",
-    isExpanded: false,
+    isExpanded: true,
     isSelected: false,
     icon: 'nav-icon fa fa-user-secret',
     isShow: false,
     subMenu: [
-
-      { id: 41, level: 2, name: '管理中心', type: "link", url: "/controlCenter", icon: 'far fa-circle nav-icon', isShow: true },
-      // { id: 43, level: 2, name: '统计', type: "link", url: "/cashierInfo", icon: 'far fa-circle nav-icon', isShow: true },
-      { id: 46, level: 2, name: '线上收款', type: "link", url: "/text", icon: 'far fa-circle nav-icon', isShow: true },
-
       {
-        id: 42,
+        id: 40,
         level: 2,
-        name: '账户管理',
+        name: '首页',
         type: "button",
-        isExpanded: false,
+        isExpanded: true,
         isSelected: false,
-        icon: 'nav-icon fa fa-user',
+        icon: 'nav-icon fas fa-tachometer-alt',
         isShow: true,
         subMenu: [
-          { id: 420, level: 2, name: '基本信息', type: "link", url: "/cashMessage", icon: 'far fa-circle nav-icon', isShow: true },
+          { id: 40, level: 3, name: '管理统计', type: "link", url: "/caSys", icon: 'far fa-circle nav-icon', isShow: true },
+          { id: 41, level: 3, name: '盘口信息', type: "link", url: "/userCenter", icon: 'far fa-circle nav-icon', isShow: true },
         ]
       },
+      { id: 41, level: 2, name: '订单管理', type: "link", url: "/caOrderList", icon: 'far fa-circle nav-icon', isShow: true },
+      { id: 42, level: 2, name: '流水管理', type: "link", url: "/caFlow", icon: 'far fa-circle nav-icon', isShow: true },
       {
-        id: 45,
-        level: 2,
-        name: '财务管理',
-        type: "button",
-        isExpanded: false,
-        isSelected: false,
-        icon: 'nav-icon fas fa-chart-pie',
-        isShow: true,
-        subMenu: [
-          { id: 45, level: 2, name: '资金记录', type: "link", url: "/serialList", icon: 'far fa-circle nav-icon', isShow: true },
-        ]
-      },
-      {
-        id: 47,
+        id: 43,
         level: 2,
         name: '结算管理',
         type: "button",
+        icon: 'far fa-circle nav-icon',
         isExpanded: false,
         isSelected: false,
-        icon: 'nav-icon fa fa fa-check',
         isShow: true,
         subMenu: [
-          { id: 470, level: 2, name: '结算申请', type: "link", url: "/setApply", icon: 'far fa-circle nav-icon', isShow: true },
-          { id: 471, level: 2, name: '结算记录', type: "link", url: "/setRecord", icon: 'far fa-circle nav-icon', isShow: true },
-
+          { id: 430, level: 3, name: '结算申请', type: "link", url: "/setPush", icon: 'far fa-circle nav-icon', isShow: true },
+          { id: 431, level: 3, name: '结算记录', type: "link", url: "/caWithdraw", icon: 'far fa-circle nav-icon', isShow: true },
         ]
       },
-      {
-        id: 48,
-        level: 2,
-        name: '订单管理',
-        type: "button",
-        isExpanded: false,
-        isSelected: false,
-        icon: 'nav-icon fas fa-edit',
-        isShow: true,
-        subMenu: [
-          { id: 480, level: 2, name: '订单列表', type: "link", url: "/orderList", icon: 'far fa-circle nav-icon', isShow: true },
-        ]
-      },
+      { id: 44, level: 2, name: '对接指南', type: "link", url: "/guide", icon: 'far fa-circle nav-icon', isShow: true },
     ]
   },
-  
+
 ];
 let levelNum = 1;
 let startExpand = []; // 保存刷新后当前要展开的菜单项

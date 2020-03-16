@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var num = 20;
+        var timer;
+        
+        fu();
+        function fu(){
+            num--;
+            console.log(num)
+            if(num>0){
+                timer=setTimeout(()=>{
+                    fu()
+                },1000)
+            }else{
+                clearTimeout(timer)
+            }
+        }
+
+        // fn1()
+        // function fn1() {
+        //    timer=setInterval(()=>{
+        //      if(num>0){
+        //          num--;
+        //          console.log(num)
+        //      }else{
+        //          clearInterval(timer)
+        //      }
+        //    },1000)
+        // }
+    </script>
+</head>
+
+<body>
+    <!-- <button onclick="fu()">点我</button> -->
+</body>
+
+</html>

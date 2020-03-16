@@ -91,7 +91,7 @@ a {
   transform: rotate(90deg);
 }
 .selected {
-  color: #1976d2!important;
+  color: #037bff!important;
 }
 .fade-enter-active {
   transition: all 0.5s ease 0s;

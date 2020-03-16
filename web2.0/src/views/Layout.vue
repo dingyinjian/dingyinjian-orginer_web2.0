@@ -34,10 +34,10 @@
           <!-- Sidebar user panel (optional) -->
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-              <img src="user4-128x128.jpg" class="img-circle elevation-2" alt="User Image">
+              <img src="user8-128x128.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-              <a href="#" class="d-block">默认用户</a>
+              <a href="#" class="d-block">{{curUser}}</a>
             </div>
           </div>
 
@@ -65,16 +65,16 @@
           Anything you want
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2014-2019 </strong> All rights reserved.
       </footer>
     </div>
-
   </div>
 </template>
 
 <script>
   // @ is an alias to /src
   import TreeView from "@/components/TreeView";
+  import { post, tips, clearCookie } from '@/facade'
 
   export default {
     name: 'Layout',
@@ -82,12 +82,58 @@
       TreeView
     },
     data(){
-      return{}
+      return{
+        curUser:'默认用户',
+        userInfo:{}
+      }
+    },
+    async created(){
+       await this.getInfo()
     },
     methods: {
-      logout(){
-        
-      }
+       /*获取用户信息和角色*/
+      async getInfo() {
+        const data = await post('/ucenter/info');
+        if (data.code == 'ok') {
+          this.curUser=data.user.email;
+          localStorage.setItem('userInfo', JSON.stringify(data.user));
+          let menus = this.$store.state.menusModule.menus
+          const roles = data.user.roles;
+          if (roles.length > 0) {
+            if (roles.indexOf('admin') != -1) {
+              menus[0].isShow = true
+            } else {
+              menus[0].isShow = false
+            }
+            if (roles.indexOf('merchant') != -1) {
+              menus[1].isShow = true                        
+            } else {
+              menus[1].isShow = false             
+            }
+            if (roles.indexOf('vender') != -1){
+              menus[2].isShow = true         
+            }
+            else menus[2].isShow = false
+            if (roles.indexOf('cashier') != -1) menus[3].isShow = true
+            else menus[3].isShow = false
+          } else {
+            this.$router.replace({ path: '/blank' })
+          }
+        } else {
+          tips('danger', data.message)
+        }
+      },
+      /*登出*/
+      async logout() {
+        const data = await post("/ucenter/logout");
+        if (data.code == 'ok') {
+          clearCookie('origin_token')
+          localStorage.clear()
+          this.$router.replace({ path: "/login" })
+        } else {
+          tips("error", data.message);
+        }
+      },
     },
 
   }
