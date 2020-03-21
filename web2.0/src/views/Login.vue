@@ -54,8 +54,8 @@
     name: "login",
     data() {
       return {
-        account: '2405260742@qq.com',
-        password: '123456'
+        account: '',
+        password: ''
       };
     },
     methods: {

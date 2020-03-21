@@ -23,19 +23,19 @@
               <div class="card-header">
                 <h3 class="card-title">小号列表</h3>
                 <div class="card-tools">
+                  <b-form inline class="placeStyle">
                   <b-button variant="primary" size="sm" @click="modal_add = true">添 加</b-button>
                   <b-button variant="primary" style="margin-left:10px;" size="sm" @click="clearBuyer()">一键清理小号</b-button>
-                  <b-button style="margin-left:10px;" variant="info" size="sm" @click="bindBuyerList()">刷 新</b-button>
-                 
+                  <b-button style="margin-left:10px;" variant="info" size="sm" @click="bindBuyerList()">刷 新</b-button>          
                   <b-button style="margin-left:10px;" size="sm" variant="danger" class="mr-1" @click="del()">批量删除小号</b-button>
-
+                  </b-form>
                 </div>
               </div>
               <div class="card-body p-0">
                 <!-- <div class="mailbox-controls">                 
                 </div> -->
                 <div class="table-responsive mailbox-messages">
-                  <b-table bordered responsive hover striped :items="buyerList" :fields="buyerFields" selectable select-mode="multi" @row-selected="onRowSelected">
+                  <b-table bordered responsive hover  :items="buyerList" :fields="buyerFields" selectable select-mode="multi" @row-selected="onRowSelected">
                     <template v-slot:cell(checkItem)="{ rowSelected }">
                       <b-form-group>
                         <template v-if="rowSelected">

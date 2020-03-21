@@ -23,7 +23,6 @@
 
   .table th,
   .table td {
-    padding: 0px;
     vertical-align: sub !important;
   }
 
@@ -57,5 +56,12 @@
     text-transform: lowercase;
     font-variant: small-caps;
   }
-
+.mx-input {
+  font-size: 1rem!important;
+    height: 38px!important;
+    border: 1px solid #ced4da!important;
+}
+/* .form-group{
+  margin-bottom: 0px!important;
+} */
 </style>

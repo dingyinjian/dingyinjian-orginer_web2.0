@@ -2,7 +2,11 @@ import axios from 'axios'
 import { vm } from './main'
 
 
-export const domain = '192.168.110.161:9006';
+// export const domain = '192.168.110.161:9006';
+// export const domain = 'payapi.yixelnb.cn';
+export const domain = 'pddapi.2x0e8.cn';
+
+
 
 const service = axios.create({ baseURL: document.location.protocol + "//" + domain, withCredentials: true });
 

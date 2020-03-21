@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "deploy": "npm run build && scp -i ~/.ssh/ns_rsa -r ./dist/* root@pdd.2x0e8.cn:/var/www/origin_web/"
   },
   "dependencies": {
     "admin-lte": "^3.0.2",
@@ -19,6 +20,7 @@
     "vue": "^2.6.11",
     "vue-router": "^3.1.5",
     "vue-select": "^3.8.1",
+    "vue2-datepicker": "^3.4.1",
     "vuex": "^3.1.2"
   },
   "devDependencies": {

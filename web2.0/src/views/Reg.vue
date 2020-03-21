@@ -9,7 +9,7 @@
         <div class="card-body login-card-body">
           <p class="login-box-msg">代收系统</p>
 
-          <form action="../../index3.html" method="post">
+          <form  method="post">
             <div class="input-group mb-3">
               <input type="email" class="form-control" v-model="form.key" placeholder="账号">
               <div class="input-group-append">

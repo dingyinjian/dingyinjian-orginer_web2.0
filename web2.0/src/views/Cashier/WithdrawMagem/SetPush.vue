@@ -31,8 +31,8 @@
                   <b-form ref="formValid">
                     <div class="row">
                       <div class="col-md-6">
-                        <b-form-group id="fieldset-2" label="提现金额" label-for="input-2" :invalid-feedback="invalidFeedback1" :state="state1">
-                          <b-form-input id="input-2" v-model="form.pushMoney" :state="state1" trim @change="changedFn"></b-form-input>
+                        <b-form-group id="fieldset-2" label="提现金额" label-for="input-2"  :state="state1">
+                          <b-form-input id="input-2" type="number" v-model="form.pushMoney" :state="state1" trim @change="changedFn"></b-form-input>
                         </b-form-group>
                       </div>
                       <div class="col-md-6">
@@ -114,15 +114,15 @@
       state1() {
         return parseInt(this.form.pushMoney) >= 100 && parseInt(this.form.pushMoney) <= this.billMoney ? true : false
       },
-      invalidFeedback1() {
-        if (parseInt(this.form.pushMoney) >= 100 && parseInt(this.form.pushMoney) <= this.billMoney) {
-          return ''
-        } else if (parseInt(this.form.pushMoney) > 0) {
-          return '最低提现金额100元'
-        } else {
-          return '请输入提现金额'
-        }
-      },
+      // invalidFeedback1() {
+      //   if (parseInt(this.form.pushMoney) >= 100 && parseInt(this.form.pushMoney) <= this.billMoney) {
+      //     return ''
+      //   } else if (parseInt(this.form.pushMoney) > 0) {
+      //     return '最低提现金额100元且不能超过可提现余额'
+      //   } else {
+      //     return '请输入提现金额'
+      //   }
+      // },
       /**银行卡号 */
       state2() {
         return this.form.card ? true : false
@@ -207,8 +207,7 @@
           }
           if (this.sysRate.sys_type == 'PET') {
             const rateAmount = pushMoney * (this.rate / 1000);
-            console.log(rateAmount);
-            this.getMoney = (pushMoney - rateAmount) / 100;
+            this.getMoney = ((pushMoney - rateAmount) / 100).toFixed(2);
           }
         } else {
           tips('danger', '最低提现金额100元且不能超过余额')

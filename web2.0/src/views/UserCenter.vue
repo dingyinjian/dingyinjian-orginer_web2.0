@@ -44,7 +44,9 @@
                     <b>登陆凭证:</b> <a class="float-right">{{userInfo.token}}</a>
                   </li>
                 </ul>
+
                 <button @click="passwordModel=true;passForm.key=userInfo.email;" class="btn btn-primary btn-block"><b>密码重置</b></button>
+                <button v-if="isShow" @click="model_invite=true" class="btn btn-info btn-block"><b>邀请用户</b></button>
 
               </div>
               <!-- /.card-body -->
@@ -173,6 +175,28 @@
           <span slot="modal-ok">确定</span>
         </b-modal>
       </div>
+      <div class="row">
+        <b-modal centered v-model="model_invite" title="邀请注册" @hidden="inviteForm={}" @ok="inviteOk">
+          <b-form ref="inviteValid" validated>
+            <div class="row">
+              <div class="col-md-12">
+                <b-form-group id="input-group-1" label="邮箱:" label-for="key" invalid-feedback="不能为空">
+                  <b-form-input id="key" type='email' v-model="inviteForm.key" required></b-form-input>
+                </b-form-group>
+              </div>
+              <div class="col-md-12 placeStyle">
+                <b-form-group label="角色:" label-for="roles">
+                    <v-select  placeholder="角色" id="role" class="style-chooser" v-model="inviteForm.roles" :options="roles" label="text" :reduce="item => item.value" required></v-select>
+                 
+                </b-form-group>
+              </div>
+
+            </div>
+          </b-form>
+          <span slot="modal-cancel">取消</span>
+          <span slot="modal-ok">确定</span>
+        </b-modal>
+      </div>
     </div>
   </div>
 
@@ -183,11 +207,13 @@
     name: 'venderInfo',
     data() {
       return {
-        loginUser:'',
+        loginUser: '',
         venInfo: {},
         userInfo: {},
         duibiForm: {},
         infoForm: {},
+        inviteForm: {},
+        model_invite: false,
         loginTime: '',
         createTime: '',
         role: null,
@@ -202,12 +228,14 @@
         timer: null,
         countdown: 60,
         path: '',
-        updatePath: ''
+        updatePath: '',
+        roles: [{ value: 'vender', text: '码商' }, { value: 'cashier', text: '盘口' }],
+        isShow:false
       }
     },
     async created() {
       await this.getUserInfo()
-     
+
     },
     methods: {
       /**获取账号信息 */
@@ -219,21 +247,22 @@
           if (this.role == 'vender') {
             this.path = '/collect/vender/info';
             this.updatePath = '/collect/vender/update';
-            this.loginUser='码商信息'
+            this.loginUser = '码商信息'
           }
           if (this.role == 'cashier') {
             this.path = '/collect/cashier/info'
             this.updatePath = '/collect/cashier/update'
-            this.loginUser='盘口信息'
+            this.loginUser = '盘口信息'
           }
-          if(this.role == 'merchant'){
+          if (this.role == 'merchant') {
             this.path = '/collect/merchant/info'
             this.updatePath = '/collect/merchant/update'
-            this.loginUser='商户信息'
+            this.loginUser = '商户信息'
+            this.isShow=true
           }
           this.loginTime = transferTime(this.userInfo.last_login);
           this.createTime = transferTime(this.userInfo.create_time);
-           this.getVenInfo();
+          this.getVenInfo();
         } else {
           tips('danger', data.message)
         }
@@ -245,6 +274,7 @@
           this.venInfo = data.result
           this.venInfo.status = this.venInfo.enabled == 1 ? '启用' : '关闭'
           this.venInfo.create_at = transferTime(this.venInfo.create_time)
+
         } else {
           tips('danger', data.message)
         }
@@ -352,6 +382,23 @@
           }
         }
       },
+      /**确认邀请 */
+      async inviteOk(bvModalEvt) {
+        bvModalEvt.preventDefault()
+        const valid = this.$refs.inviteValid.checkValidity()
+        if (valid) {
+          this.inviteForm.type = 'email'
+          const Url = process.env.NODE_ENV == 'production' ? document.location.protocol + '//pay.yixelnb.cn' : document.location.protocol + '//127.0.0.1:8080';
+          this.inviteForm.url = `${Url}/registered?f_id=${this.userInfo.id}&&type=email&key=${this.inviteForm.key}&token={token}`        
+          const data = await post('/ucenter/invite', this.inviteForm);
+          if (data.code == 'ok') {
+            tips('success', '发送成功');
+            this.model_invite = false;
+          } else {
+            tips('danger', data.message)
+          }
+        }
+      }
     }
   }
 </script>

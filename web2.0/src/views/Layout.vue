@@ -1,5 +1,5 @@
 <template>
-  <div id="Layout" >
+  <div id="Layout">
     <div class="wrapper">
       <!-- Navbar -->
       <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -14,8 +14,8 @@
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
           <!-- Messages Dropdown Menu -->
-            <button type="button" @click="logout" class="btn btn-block btn-primary btn-sm">登 出</button>
-         
+          <button type="button" @click="logout" class="btn btn-block btn-primary btn-sm">登 出</button>
+
         </ul>
       </nav>
       <!-- /.navbar -->
@@ -24,9 +24,8 @@
       <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
         <a href="/layout" class="brand-link">
-          <img src="/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-            style="opacity: .8">
-          <span class="brand-text font-weight-light">代收系统</span>
+          <img src="/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+          <span class="brand-text font-weight-light">后台系统</span>
         </a>
 
         <!-- Sidebar -->
@@ -78,24 +77,24 @@
 
   export default {
     name: 'Layout',
-     components: {
+    components: {
       TreeView
     },
-    data(){
-      return{
-        curUser:'默认用户',
-        userInfo:{}
+    data() {
+      return {
+        curUser: '默认用户',
+        userInfo: {}
       }
     },
-    async created(){
-       await this.getInfo()
+    async created() {
+      await this.getInfo()
     },
     methods: {
-       /*获取用户信息和角色*/
+      /*获取用户信息和角色*/
       async getInfo() {
         const data = await post('/ucenter/info');
         if (data.code == 'ok') {
-          this.curUser=data.user.email;
+          this.curUser = data.user.email;
           localStorage.setItem('userInfo', JSON.stringify(data.user));
           let menus = this.$store.state.menusModule.menus
           const roles = data.user.roles;
@@ -106,12 +105,13 @@
               menus[0].isShow = false
             }
             if (roles.indexOf('merchant') != -1) {
-              menus[1].isShow = true                        
+              menus[1].isShow = true
             } else {
-              menus[1].isShow = false             
+              menus[1].isShow = false
             }
-            if (roles.indexOf('vender') != -1){
-              menus[2].isShow = true         
+            if (roles.indexOf('vender') != -1) {
+              menus[2].isShow = true
+              this.getVenderInfo();
             }
             else menus[2].isShow = false
             if (roles.indexOf('cashier') != -1) menus[3].isShow = true
@@ -121,6 +121,19 @@
           }
         } else {
           tips('danger', data.message)
+        }
+      },
+      /**获取码商vender的信息 */
+      async getVenderInfo() {
+        const data = await post('/collect/vender/info')
+        if (data.code == 'ok') {
+          let menus = this.$store.state.menusModule.menus
+          if (data.result.type) {
+            if (data.result.type.indexOf('PDD') != -1) menus[2].subMenu[1].isShow = true
+            else menus[2].subMenu[1].isShow = true
+            if (data.result.type.indexOf('YSF') != -1) menus[2].subMenu[2].isShow = true
+            else menus[2].subMenu[2].isShow = true
+          }
         }
       },
       /*登出*/

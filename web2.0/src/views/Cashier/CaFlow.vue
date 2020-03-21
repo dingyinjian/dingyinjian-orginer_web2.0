@@ -29,7 +29,7 @@
               <div class="card-body p-0">
                 <div class="mailbox-controls">
                   <b-form inline class="placeStyle">
-                    <v-select style="width:150px;margin-left:10px;" placeholder="类型" class="style-chooser" v-model="form.type" :options="types" label="text" :reduce="item => item.value" @input="currentPage=1;bindSerialList()"></v-select>
+                    <v-select style="width:250px;margin-left:10px;" placeholder="类型" class="style-chooser" v-model="form.type" :options="types" label="text" :reduce="item => item.value" @input="currentPage=1;bindSerialList()"></v-select>
                     <b-button style="margin-left:10px;" variant="info" size="sm" @click="bindSerialList()">刷 新</b-button>
                   </b-form>
 
@@ -77,11 +77,18 @@
           { key: 'change', label: '变动金额(元)', formatter: value => (value || 0) / 100 }, { key: 'after', label: '变动后金额(元)', formatter: value => (value || 0) / 100 }, { key: 'create_time', label: '创建时间', formatter: transferTime }
         ],
         types: [
-          { value: '订单收款', text: '订单收款' },
-          { value: '订单手续费', text: '订单手续费' },
-          { value: '提现', text: '提现' },
-          { value: '充值', text: '充值' },
+          { value: '云闪付盘口收款', text: '云闪付盘口收款' },
+          { value: '云闪付盘口收款手续费', text: '云闪付盘口收款手续费' },
+          { value: '云闪付码商收款', text: '云闪付码商收款' },
+          { value: '云闪付码商收款提成', text: '云闪付码商收款提成' },
 
+          { value: '拼多多盘口收款', text: '拼多多盘口收款' },
+          { value: '拼多多盘口收款手续费', text: '拼多多盘口收款手续费' },
+          { value: '拼多多码商收款', text: '拼多多码商收款' },
+          { value: '拼多多码商收款提成', text: '拼多多码商收款提成' },
+          { value: '商户充值', text: '商户充值' },
+          { value: '代付订单手续费', text: '代付订单手续费' },
+          { value: '代付订单扣款', text: '代付订单扣款' },
         ],
         currentPage: 1,
         pages: 1,

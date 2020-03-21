@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+		 crossorigin="anonymous">
+		<script type="text/javascript" src="js/qrcode.js"></script>
+
+		<style type="text/css">
+			.title {
+				width: 100%;
+				padding: 10px;
+				color: #fff;
+				width: 100%;
+				background: #007bff;
+				/* border: 1px solid #999; */
+			}
+
+			#payType {
+				line-height: 30px;
+				font-size: 24px;
+
+			}
+
+			.code {
+				background: #f5f5f5;
+			}
+
+			.code div {
+				margin: 20px auto;
+				text-align: center;
+			}
+
+			.amountDiv {
+				line-height: 45px;
+			}
+
+			.times {
+				line-height: 45px;
+			}
+
+			#alipay {
+				display: none;
+			}
+
+			#wechat {
+				display: none;
+			}
+			#wxtip {
+				background: rgba(0, 0, 0, 0.8);
+				text-align: center;
+				position: fixed;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				z-index: 998;
+				display: none;
+			}
+			
+			#wxtip img {
+				width: 80%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="title">
+			<div class="container">
+				<div class="row clearfix">
+					<div class="col-md-12 column">
+						<span id="payType"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row clearfix">
+				<div class="col-md-6 column">
+					<div class="amountDiv">订单金额: <span id="amount"></span>元</div>
+
+				</div>
+				<div class="col-md-6">
+					<div class="times">支付剩余时间：<span id="timeCut" style="color: red;"></span></div>
+				</div>
+
+			</div>
+			<div id="alipay">
+				<div class="row">
+					<!-- 					<div class="col-md-6 column code ">
+						<div id="qrcode" style="width:200px; height:200px; margin-top:15px auto; "></div>
+						<div>
+							<a type="button" id="pcUrl" href="" target="_blank" style="color: #ffff;width: 200px;" class="btn btn-default btn-primary">支付宝网页支付</a>
+						</div>
+					</div> -->
+					<div class="col-md-12 column code">
+						<div id="qrcode2" style="width:200px; height:200px; margin-top:15px auto; "></div>
+						<div>
+							<a type="button" id="mobileUrl" href="" target="_blank" style="color: #ffff;width: 200px;" class="btn btn-default btn-primary">支付宝APP支付</a>
+						</div>
+						<div  style="color:red;">请使用支付宝扫码支付</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="wechat">
+				<div class="row">
+					<div class="col-md-12 column code ">
+						<div id="wechatDrcode" style="width:200px; height:200px; margin-top:15px auto; "></div>
+						<div>
+							<a type="button" id="wechatUrl" href="" target="_blank" style="color: #ffff;width: 200px;" class="btn btn-default btn-primary">微信APP支付</a>
+						</div>
+						<div id="tips" style="color:red;">请使用手机微信扫码支付</div>
+					</div>
+
+				</div>
+			</div>
+			<div id="wxtip">
+				<img src="images/live_weixin.png">
+			</div>
+		</div>
+		<script src="jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/popper.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="moment.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)){
+				/** 手机打开*/
+				// $("#qrcode2").css('display','none')
+				$("#wechatDrcode").css('display','none')
+				$("#tips").css('display','none')
+				var ua = navigator.userAgent.toLowerCase();
+				var isWeixin = ua.indexOf('micromessenger') != -1;
+				if (isWeixin) {
+					var ui = document.getElementById("wxtip");
+					ui.style.display = "block";
+				}
+			}else{
+				/** pc打开*/
+				$("#wechatUrl").css('display','none')
+				$("#mobileUrl").css('display','none')
+
+			}
+			
+			var params = [];
+			urlSearch();
+			function urlSearch() {
+				var name, value;
+				var str = location.href; //取得整个地址栏
+				var num = str.indexOf("?")
+				str = str.substr(num + 1); //取得所有参数   stringvar.substr(start [, length ]
+				console.log(str);
+				var arr = str.split("&"); //各个参数放到数组里
+				arry = [];
+
+				for (var i = 0; i < arr.length; i++) {
+					num = arr[i].indexOf("=");
+					console.log(num);
+					if (num > 0) {
+						name = arr[i].substring(0, num);
+						value = arr[i].substr(num + 1);
+						console.log(name, value)
+						arry.push(value)
+					}
+				}
+				console.log(arry)
+				params = arry;
+				console.log(params)
+				if (arry.length > 0) {
+					getParameter(arry)
+				}
+			}
+			var sencondTime
+
+			function getParameter(e) {
+				// var url = 'http://wjl.17b1.com:8080' + '/pay/pdd/query2';
+				var url = 'https://payapi.yixelnb.cn' + '/collect/transaction/pdd/query2';
+				// var url = 'http://192.168.110.161:9003' + '/pay/pdd/query2';
+				$.ajax({
+					async: false, //同步，异步
+					url: url, //请求的服务端地址
+					data: {
+						code: e[0],
+						no: e[1]
+					},
+					type: "post",
+					dataType: "json",
+					success: function(data) {
+						console.log(data);
+						// sencondTime=moment().format(data.create_time);						 
+						sencondTime = data.create_time;
+						console.log(sencondTime)
+						const payJson = JSON.parse(data.pay_json)
+						console.log(payJson)
+						const amount = (data.amount || 0) / 100
+						$("#amount").text(amount)
+						if (data.pay_type == 'alipay') {
+							$("#alipay").css('display', 'block')
+							const msg = "支付宝支付";
+							$("#payType").text(msg);
+							// $("#pcUrl").attr("href", payJson.pc);
+							$("#mobileUrl").attr("href", payJson.mobile);
+							// creatCode(payJson.pc);
+							console.log(payJson.mobile)
+							creatCode2(payJson.mobile);
+						} else if (data.pay_type == 'wechat') {
+							// $(".wecha").css('display', 'block')
+							const msg = "微信支付";
+							$("#payType").text(msg);
+							$("#wechat").css('display', 'block')
+							$("#wechatUrl").attr("href",payJson.mobile);
+							creatCode3();
+						}
+						if (data.status == 'INIT') {
+							timeId = setInterval(function() {
+								getOrder()
+							}, 2000);
+						} else if (data.status == 'SUCCESS') {
+							window.location.replace("success.html")
+						} else if (data.status == 'TIMEOUT') {
+							window.location.replace("fail.html")
+						}
+						timer;
+					},
+					error: function() {
+						// alert('error'); //错误的处理
+						return false;
+					}
+				});
+			}
+
+			// function creatCode(e) {
+			// 	var qrcode = new QRCode("qrcode", {
+			// 		text: e,
+			// 		width: 200,
+			// 		height: 200,
+			// 		colorDark: "#000000",
+			// 		colorLight: "#ffffff",
+			// 		correctLevel: QRCode.CorrectLevel.H
+			// 	});
+			// }
+
+			function creatCode2(e) {
+				console.log(e)
+				var qrcode = new QRCode("qrcode2", {
+					text: e,
+					width: 200,
+					height: 200,
+					colorDark: "#000000",
+					colorLight: "#ffffff",
+					correctLevel: QRCode.CorrectLevel.L
+				});
+			}
+
+			function creatCode3() {
+				var wechatDrcode = new QRCode("wechatDrcode", {
+					text: location.href,
+					width: 200,
+					height: 200,
+					colorDark: "#000000",
+					colorLight: "#ffffff",
+					correctLevel: QRCode.CorrectLevel.L
+				});
+			}
+			var maxtime = 5 * 60; //一个小时，按秒计算，自己调整!   
+			function CountDown() {
+				const creatTime = moment(sencondTime).format("YYYY-MM-DD HH:mm:ss")
+				const currenTime = moment().format('YYYY-MM-DD HH:mm:ss');
+				const seconds = moment(currenTime).diff(creatTime, "seconds");
+				if (seconds > 300) {
+					clearInterval(timer);
+					$("#timeCut").text('已超时');
+					window.location.replace("fail.html")
+				} else {
+					const second = maxtime - seconds
+					if (second >= 0) {
+						msg = " " + second + "秒";
+						$("#timeCut").text(msg);
+					} else {
+						clearInterval(timer);
+						$("#timeCut").text('已超时');
+						window.location.replace("fail.html")
+					}
+
+				}
+			}
+			var timer = setInterval(function() {
+				CountDown()
+			}, 1000);
+
+			function getOrder() {
+				// var url = 'http://wjl.17b1.com:8080' + '/pay/pdd/query2';
+				var url = 'https://payapi.yixelnb.cn' + '/collect/transaction/pdd/query2'
+				console.log(params)
+				$.ajax({
+					async: false, //同步，异步
+					url: url, //请求的服务端地址
+					data: {
+						code: params[0],
+						no: params[1]
+					},
+					type: "post",
+					dataType: "json",
+					success: function(data) {
+						//成功之后的处理，返回的数据就是 data
+						console.log(222)
+						console.log(timeId)
+						if (data.status == 'SUCCESS') {
+							clearInterval(timeId)
+							window.location.replace("success.html")
+						} else if (data.status == 'TIMEOUT') {
+							console.log(22211)
+							window.location.replace("fail.html")
+						}
+						// return data.data_status							
+					},
+					error: function() {
+						alert('error'); //错误的处理
+						// return false;
+					}
+				});
+			}
+		</script>
+	</body>
+</html>
